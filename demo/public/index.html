@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <script src="//cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+    <script src="/assets/lib/apibus.js"></script>
+    <script>
+        apiBus.add([{
+                url:'/apis/one', 
+                success: function(result){
+                    console.log('one api success!')
+                    console.log(result);
+                },
+                complete: function(result){
+                    console.log('one api complete!')
+                }
+            }, {
+                
+                url:'/apis/two',
+                params: {arg: 'params?'},
+                success: function(result){
+                    console.log('two api success!')
+                    console.log(result);
+                }
+            }
+        ]);
+        
+        apiBus.add({
+            url:'/apis/three', 
+            error: function(result){
+                console.log('three api error!')
+                console.log(result);
+            }
+        });
+        
+        apiBus.add({
+            url:'/apis/four', 
+            method: 'POST',
+            body: {d: 'ddd?'},
+            success: function(result){
+                console.log(result.data);
+            }
+        });
+        
+        apiBus.start(function(){
+            console.log('api bus done!');
+        });
+    </script>
+</body>
+</html>

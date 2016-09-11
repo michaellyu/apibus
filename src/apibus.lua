@@ -1,4 +1,4 @@
-local cjson = require "cjson.safe";
+local cjson = require 'cjson.safe';
 
 ngx.req.read_body();
 local post_args = ngx.req.get_post_args();
@@ -40,10 +40,10 @@ local responses = {ngx.location.capture_multi(seats)};
 local bus = {};
 local res;
 for k, v in pairs(responses) do
-    if v.status == 200 then
+    if v.status >= 200 and v.status < 300 then
         res = cjson.decode(v.body);
     else
-        res = "error";
+        res = 'error';
     end
     
     table.insert(bus, k, res);
